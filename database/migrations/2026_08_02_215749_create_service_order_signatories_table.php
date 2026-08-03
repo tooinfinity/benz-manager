@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('service_order_signatories', static function (Blueprint $table): void {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignIdFor(ServiceOrder::class);
             $table->string('role'); // enum-cast: SignatoryRole
             $table->string('name')->nullable();
