@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Models\Cmp;
 use App\Models\Contract;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 test('to array', function (): void {
     $contract = Contract::factory()->create()->refresh();
@@ -18,4 +21,13 @@ test('to array', function (): void {
             'created_at',
             'updated_at',
         ]);
+});
+
+test('relations', function (): void {
+    $contract = Contract::factory()->create();
+
+    expect($contract->cmp())->toBeInstanceOf(BelongsTo::class)
+        ->and($contract->serviceOrders())->toBeInstanceOf(HasMany::class);
+
+    expect($contract->cmp)->toBeInstanceOf(Cmp::class);
 });
